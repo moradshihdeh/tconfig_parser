@@ -1,5 +1,5 @@
 namespace window {
-    int width = 1280
+    int width = !-1280
     int height = 720
     string title = "Game to play"
     namespace camera {
