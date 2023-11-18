@@ -1,35 +1,35 @@
 namespace window {
-    int width = !-1280
-    int height = 720
-    string title = "Game to play"
+    int width = -1280;
+    int height = 720;
+    string title = "Game to play";
     namespace camera {
-        int x = !100 + 20
-        int y = 0
+        int x = 100 + 20;
+        int y = 0;
 
     }
 }
 
-# @window.width @this.x
+
 
 namespace player {
-    int x = 0
-    int y = 0
-    float test = ! .2 + -.5 -- 1
-    int radius = 0
+    int x = 0;
+    int y = 0;
+    float test = .2 + -.5 -- 1;
+    int radius = 0;
     struct color = {.r:0, .g:0, .b:255 }
-
+    struct data = { .info:'data', .total:1000}
     namespace stats {
-        int max_health = 100
-        int attack = 10
-        float attack_speed = 1.0
+        int max_health = 100;
+        int attack = 10;
+        float attack_speed = 1.0;
     }
 
     namespace animations{
         namespace idle {
-            string path = ".resources/animations/idle/"
+            string path = ".resources/animations/idle/";
             list files = string ['file1.png', 'file2.png' ]
-            int frames = 2
-            float tweening = 1.2
+            int frames = 2;
+            float tweening = 1.2  - -1;
         }
 
     }
@@ -38,15 +38,15 @@ namespace player {
 namespace map {
     namespace map1{
         namespace tile {
-            int width = 16
-            int height = ! 16 + 16
+            int width = 16;
+            int height =  16 + 16;
         }
-        int columns = 120
-        int rows = 100
-        int width = ! -120 * 16
-        int height = ! 100 * 16
-        list layer1 = int [ !1+2-5*10 + -100, 1, 99, 0, 1, !9--2, 0, 1]
-        list layer2 = int [ 0, !-1, 2, 0, 1, 2, 0, 0]
-        list float_test = float [! -.5 -- 1.0 * 3, .4, 1.2]
+        int columns = 120;
+        int rows =  100 - 10;
+        int width =  -120 * 16;
+        int height =  100 * 16;
+        list layer1 = int [ 1+2-5*10 + -100, 1, 99, 0, 1, 9--2, 0, 1]
+        list layer2 = int [ 0, -1, 2, 0, 1, 2, 0, 0]
+        list float_test = float [-.5 -- 1.0 * 3, .4, -1.2]
     }
 }

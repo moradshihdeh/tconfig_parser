@@ -75,6 +75,10 @@ def scan_next_float(cursor):
     number = ''
     cursor.skip('\n \t')
     dots = 0
+
+    if cursor.skip_char_ifexpected('-'):
+        number += '-'
+
     while is_chdigit(cursor.get_char()) or cursor.get_char() == '.':
         if cursor.get_char() == '.':
             dots += 1
@@ -84,7 +88,8 @@ def scan_next_float(cursor):
         cursor.advance()
 
     cursor.skip(' \t\n')
-
+    print(cursor)
+    print(number)
     return float(number), cursor
 
 NUMBER = 'number'
@@ -100,7 +105,7 @@ def solve_next_expr(cursor):
     # 100 + 100
     # number number number space symbol space number
     cursor.skip_spaces()
-    while not cursor.get_char().isalpha() and not(cursor.get_char() in '{},'): #cursor.get_char() != '\n':
+    while cursor.char_isnot(';') and cursor.char_isnot(',') and cursor.char_isnot(']'):
 
         if state == SCANNING:
             if (is_chnumber(cursor.get_char()) or cursor.get_char() in '-+') and expected == NUMBER:
@@ -150,7 +155,6 @@ def solve_next_expr(cursor):
         else:
             parsing_error(cursor, emsg('math expression not formatted properly','check the format'))
 
-
     return eval_postfix(postfix(expr)), cursor
 
 def scan_next_string(cursor):
@@ -159,11 +163,18 @@ def scan_next_string(cursor):
     error, quote_type = cursor.skip_char_ifexpected_anyof('\'\"')
     cursor.skip_spaces()
 
-    while cursor.char_isnot(quote_type):
-        string += cursor.get_char()
-        cursor.advance()
+    while cursor.char_isnot(';') and cursor.char_isnot(',') and cursor.char_isnot(']'): #cursor.char_isnot(quote_type):
 
-    cursor.skip_char_ifexpected(f"{quote_type}")
+        while cursor.get_char() != quote_type:
+            string += cursor.get_char()
+            cursor.advance()
+
+        if cursor.skip_char_ifexpected(quote_type):
+            cursor.skip_spaces()
+
+            #if concatenation
+
+
     cursor.skip_spaces()
 
     return string, cursor
@@ -223,7 +234,7 @@ def scan_next_struct(cursor):
 
     return result, cursor
 
-import copy
+
 def scan_next_list(cursor):
 
     #scan type of list
@@ -238,28 +249,19 @@ def scan_next_list(cursor):
         cursor.skip_spaces()
         temp = ''
         if list_type == 'int':
-            # temp, cursor = scan_next_int(cursor)
-            if cursor.skip_char_ifexpected('!'):
-                temp, cursor = solve_next_expr(cursor)
-                temp_type = detect_type(str(temp))
-                if temp_type != 'int':
-                    parsing_error(cursor, emsg(f"invalid value {temp}", f"expected int got {temp_type}"))
-                temp = int(temp)
-            else:
-                temp, cursor = scan_next_int(cursor)
+            temp, cursor = solve_next_expr(cursor)
+            temp_type = detect_type(str(temp))
+            if temp_type != 'int':
+                parsing_error(cursor, emsg(f"invalid value {temp}", f"expected int got {temp_type}"))
+            temp = int(temp)
         elif list_type == 'string':
             temp, cursor = scan_next_string(cursor)
         elif list_type == 'float':
-            #temp, cursor = scan_next_float(cursor)
-            if cursor.skip_char_ifexpected('!'):
-                temp, cursor = solve_next_expr(cursor)
-                temp_type = detect_type(str(temp))
-                if temp_type != 'float':
-                    parsing_error(cursor, emsg(f"invalid value {temp}", f"expected float got {temp_type}"))
-                temp = float(temp)
-            else:
-                temp, cursor = scan_next_float(cursor)
-
+            temp, cursor = solve_next_expr(cursor)
+            temp_type = detect_type(str(temp))
+            if temp_type != 'float':
+                parsing_error(cursor, emsg(f"invalid value {temp}", f"expected float got {temp_type}"))
+            temp = float(temp)
         elif list_type == 'list':
             temp, cursor = scan_next_list(cursor)
         elif list_type == 'struct':
@@ -301,19 +303,20 @@ def scan_namespace_body(cursor, access_data, namespace):
 
         cursor.skip_spaces()
         if var_type == 'int':
-            if cursor.skip_char_ifexpected('!'):
-                var_value, cursor = solve_next_expr(cursor)
-                var_value = int(var_value)
-            else:
-                var_value, cursor = scan_next_int(cursor)
+            var_value, cursor = solve_next_expr(cursor)
+            var_value = int(var_value)
+            cursor.skip_char_ifexpected(';')
         elif var_type == 'float':
-            if cursor.skip_char_ifexpected('!'):
-                cursor.skip('!')
-                var_value, cursor = solve_next_expr(cursor)
-            else:
-                var_value, cursor = scan_next_float(cursor)
+
+            var_value, cursor = solve_next_expr(cursor)
+            var_value = float(var_value)
+            cursor.skip_char_ifexpected(';')
+
         elif var_type == 'string':
             var_value, cursor = scan_next_string(cursor)
+            if cursor.skip_char_ifexpected(';') == False:
+                print(var_value)
+                parsing_error(cursor, emsg(f"code format error",'expected ;'))
         elif var_type == 'list':
             var_value, cursor = scan_next_list(cursor)
         elif var_type == 'struct':

@@ -49,8 +49,9 @@ class Cursor:
 
     def char_is(self, char):
         return True if self.get_char() == char else False
+
     def char_isnot(self, char):
-        return True if self.get_char() != char else False
+        return False if self.get_char() == char else True
 
     def char_is_digit(self):
         return True if self.get_char().isdigit() else False
