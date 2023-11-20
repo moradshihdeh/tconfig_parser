@@ -9,6 +9,15 @@ def print_dict(dictionary, indent=0):
         if isinstance(value, dict):
             print("\t" * indent + f"{key}:")
             print_dict(value, indent + 1)
+        elif isinstance(value, list):
+            print("\t" * indent + f"{key}:")
+            print('\t' * indent, end='')
+            print('[')
+            for i in range(0, len(value), 7):
+                print('\t' * (indent + 1), end='')
+                print(*value[i:i + 7])
+            print('\t' * indent, end='')
+            print(']')
         else:
             print("\t" * indent + f"{key}:\t{value}")
 
