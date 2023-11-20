@@ -44,6 +44,13 @@ class Cursor:
 
         return self.script[temp_index]
 
+    def peek_next_nonspace_any(self, character):
+        temp_index = self.index
+        while self.script[temp_index] in ' \t\n':
+            temp_index += 1
+
+        return self.script[temp_index] in character
+
     def get_char(self):
         return self.script[self.index]
 

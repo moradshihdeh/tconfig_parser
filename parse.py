@@ -158,13 +158,13 @@ def solve_next_expr(cursor):
     return eval_postfix(postfix(expr)), cursor
 
 def scan_next_string(cursor):
-    string = ''
+
 
     cursor.skip_spaces()
     error, quote_type = cursor.skip_char_ifexpected_anyof('\'\"')
-
+    result = ''
     while cursor.char_isnot(';') and cursor.char_isnot(',') and cursor.char_isnot(']'):
-
+        string = ''
         while cursor.get_char() != quote_type:
             string += cursor.get_char()
             cursor.advance()
@@ -174,13 +174,22 @@ def scan_next_string(cursor):
             if cursor.skip_char_ifexpected('+'):
                 cursor.skip_spaces()
                 error, quote_type = cursor.skip_char_ifexpected_anyof('\'\"')
+            elif cursor.skip_char_ifexpected('*'):
+                cursor.skip_spaces()
+                repeat, cursor = scan_next_int(cursor)
+                string = string * repeat
+                cursor.skip_spaces()
+            elif cursor.peek_next_nonspace_any(';,]') == False:
+
+                parsing_error(cursor,  emsg('error in string format', f"found {cursor.get_char()} expected any of: \'\"]"))
+        result += string
 
             #if concatenation
 
 
     cursor.skip_spaces()
 
-    return string, cursor
+    return result, cursor
 
 def is_valid_chvalue(chvalue):
     return is_alpha(chvalue) or is_chdigit(chvalue) or is_chdot(chvalue)
