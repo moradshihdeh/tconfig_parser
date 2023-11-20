@@ -1,7 +1,7 @@
 namespace window {
     int width = -1280;
     int height = 720;
-    string title = "Game to play "- + "yes please" + ' this is a test ' * 3;
+    string title = "Game to play " + "yes please" + ' this is a test ' * 3;
     namespace camera {
         int x = 100 + 20;
         int y = 0;

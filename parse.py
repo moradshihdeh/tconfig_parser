@@ -154,7 +154,6 @@ def solve_next_expr(cursor):
 
         else:
             parsing_error(cursor, emsg('math expression not formatted properly','check the format'))
-
     return eval_postfix(postfix(expr)), cursor
 
 def scan_next_string(cursor):
