@@ -159,11 +159,11 @@ def solve_next_expr(cursor):
 
 def scan_next_string(cursor):
     string = ''
+
     cursor.skip_spaces()
     error, quote_type = cursor.skip_char_ifexpected_anyof('\'\"')
-    cursor.skip_spaces()
 
-    while cursor.char_isnot(';') and cursor.char_isnot(',') and cursor.char_isnot(']'): #cursor.char_isnot(quote_type):
+    while cursor.char_isnot(';') and cursor.char_isnot(',') and cursor.char_isnot(']'):
 
         while cursor.get_char() != quote_type:
             string += cursor.get_char()
@@ -171,6 +171,9 @@ def scan_next_string(cursor):
 
         if cursor.skip_char_ifexpected(quote_type):
             cursor.skip_spaces()
+            if cursor.skip_char_ifexpected('+'):
+                cursor.skip_spaces()
+                error, quote_type = cursor.skip_char_ifexpected_anyof('\'\"')
 
             #if concatenation
 

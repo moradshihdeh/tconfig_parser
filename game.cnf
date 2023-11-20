@@ -1,7 +1,7 @@
 namespace window {
     int width = -1280;
     int height = 720;
-    string title = "Game to play";
+    string title = "Game to play " + "yes please" + ' this is a test';
     namespace camera {
         int x = 100 + 20;
         int y = 0;
@@ -27,7 +27,7 @@ namespace player {
     namespace animations{
         namespace idle {
             string path = ".resources/animations/idle/";
-            list files = string ['file1.png', 'file2.png' ]
+            list files = string ['file1'+'.png', 'file2.png' ]
             int frames = 2;
             float tweening = 1.2  - -1;
         }
@@ -44,7 +44,7 @@ namespace map {
         int columns = 120;
         int rows =  100 - 10;
         int width =  -120 * 16;
-        int height =  100 * 16;
+        int height =  -100 * -16;
         list layer1 = int [ 1+2-5*10 + -100, 1, 99, 0, 1, 9--2, 0, 1]
         list layer2 = int [ 0, -1, 2, 0, 1, 2, 0, 0]
         list float_test = float [-.5 -- 1.0 * 3, .4, -1.2]
