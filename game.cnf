@@ -28,35 +28,71 @@ namespace player {
         namespace idle {
             string path = ".resources/animations/idle/";
             list files = string [
-        "frame_000.png", "frame_001.png", "frame_002.png", "frame_003.png", "frame_004.png", "frame_005.png", "frame_006.png", "frame_007.png",
-        "frame_008.png", "frame_009.png", "frame_010.png", "frame_011.png", "frame_012.png", "frame_013.png", "frame_014.png", "frame_015.png",
-        "frame_016.png", "frame_017.png", "frame_018.png", "frame_019.png", "frame_020.png", "frame_021.png", "frame_022.png", "frame_023.png",
-        "frame_024.png", "frame_025.png", "frame_026.png", "frame_027.png", "frame_028.png", "frame_029.png", "frame_030.png", "frame_031.png",
-        "frame_032.png", "frame_033.png", "frame_034.png", "frame_035.png", "frame_036.png", "frame_037.png", "frame_038.png", "frame_039.png",
-        "frame_040.png", "frame_041.png", "frame_042.png", "frame_043.png", "frame_044.png", "frame_045.png", "frame_046.png", "frame_047.png",
-        "frame_048.png", "frame_049.png", "frame_050.png", "frame_051.png", "frame_052.png", "frame_053.png", "frame_054.png", "frame_055.png",
-        "frame_056.png", "frame_057.png", "frame_058.png", "frame_059.png", "frame_060.png", "frame_061.png", "frame_062.png", "frame_063.png",
-        "frame_064.png", "frame_065.png", "frame_066.png", "frame_067.png", "frame_068.png", "frame_069.png", "frame_070.png", "frame_071.png"]
-
-            int frames = -2 -- 4;
-            float tweening = 1.2  - -1;
+                "frame_000.png", "frame_001.png", "frame_002.png",
+                "frame_003.png", "frame_004.png", "frame_005.png"
+            ]
+            int frames = 6;
+            float tweening = 1.2;
+        }
+        namespace moving_animation{
+            string id = 'moving_animation';
+            string path = './moving_animation';
+            namespace left{
+                string id = "left";
+                float tweening = 1.4;
+                int frames = 5;
+                list files = string [
+                    "frame_000.png", "frame_001.png", "frame_002.png", "frame_003.png", "frame_004.png"
+                ]
+                struct hitbox = {.x:0, .y:0, .w:16, .h:16}
+                int width = 16;
+                int height = 16;
+            }
+            namespace right{
+                string id = "right";
+                float tweening = 1.4;
+                int frames = 5;
+                list files = string [
+                    "frame_000.png", "frame_001.png", "frame_002.png", "frame_003.png", "frame_004.png"
+                ]
+                struct hitbox = {.x:0, .y:0, .w:16, .h:16}
+                int width = 16;
+                int height = 16;
+            }
         }
 
     }
 }
 
-namespace map {
-    namespace map1{
-        namespace tile {
-            int width = 16;
-            int height =  16 + 16;
+namespace scene{
+    namespace intro {
+        namespace map{
+            namespace background{
+                string filename = "background.png";
+                string scrolling = 'True';
+
+            }
+            namespace ground_tiles {
+                string path = "./assets/tiles/"
+                string filename = "ground_tiles.png";
+                int columns = 10;
+                int rows = 0;
+                list ids = int [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                int width = 16;
+                int height =  16 ;
+
+            }
+            list layer1 = int [ 0,0,0,0,0,0,0,0,0,0,
+                            0,0,0,0,0,0,0,0,0,0]
+            list layer2 = int [ 0,0,0,0,0,0,0,0,0,0,
+                            0,0,0,0,0,0,0,0,0,0]
+
+            int width = 120;
+            int height = 115;
+            int pixle_width = 120 * 16;
+            int pixle_height = 115 * 16;
+
+            struct start_point = {.x:100, .y:50}
         }
-        int columns = 120;
-        int rows =  100 - 10;
-        int width =  -120 * 16;
-        int height =  -100 * -16;
-        list layer1 = int [ 1+2-5*10 + -100, 1, 99, 0, 1, 9--2, 0, 1]
-        list layer2 = int [ 0, -1, 2, 0, 1, 2, 0, 0]
-        list float_test = float [-.5 -- 1.0 * 3, .4, -1.2]
     }
 }

@@ -179,7 +179,6 @@ def scan_next_string(cursor):
                 string = string * repeat
                 cursor.skip_spaces()
             elif cursor.peek_next_nonspace_any(';,]') == False:
-
                 parsing_error(cursor,  emsg('error in string format', f"found {cursor.get_char()} expected any of: \'\"]"))
         result += string
 
