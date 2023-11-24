@@ -21,6 +21,8 @@ def print_dict(dictionary, indent=0):
         else:
             print("\t" * indent + f"{key}:\t{value}")
 
+def is_valid_chname(character):
+    return character.isalpha() or character.isdigit() or character == '_'
 def extract_value(namespace, config):
     index = 0
     eof = len(namespace)
@@ -29,7 +31,7 @@ def extract_value(namespace, config):
     while index < eof:
 
         key = ''
-        while index < eof and namespace[index].isalpha():
+        while index < eof and is_valid_chname(namespace[index]):
             key += namespace[index]
             index += 1
         conf = conf[key] if key in conf else None

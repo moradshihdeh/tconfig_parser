@@ -73,7 +73,7 @@ namespace scene{
 
             }
             namespace ground_tiles {
-                string path = "./assets/tiles/"
+                string path = "./assets/tiles/";
                 string filename = "ground_tiles.png";
                 int columns = 10;
                 int rows = 0;
