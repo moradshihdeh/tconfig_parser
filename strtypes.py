@@ -80,6 +80,8 @@ def is_float(string):
     except ValueError:
         return False
 
+def is_valid_chpath(character):
+    return character.isalpha() or character.isdigit() or character in './\\_()-'
 
 if __name__ == '__main__':
     print(detect_type('1.99a9..'))

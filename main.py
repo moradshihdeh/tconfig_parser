@@ -3,18 +3,7 @@ from helpers import *
 
 
 
-def run(filename):
-    script = ''
-    try:
-        with open(filename, 'r') as file:
-            script = file.read()
-    except FileNotFoundError:
-        print(f"The file '{filename}' was not found.")
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
 
-    cursor = Cursor(script)
-    return parse(cursor)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':

@@ -25,7 +25,8 @@ def scan_next_reserved(cursor):
 
     if cursor.get_char() == '#':
         return '#', cursor
-
+    elif cursor.get_char() == '$':
+        return '$', cursor
     if not is_alpha(cursor.get_char()):
         parsing_error(cursor,emsg('errors parsing comments'))
     while is_alpha(cursor.get_char()) or is_chdigit(cursor.get_char()):
@@ -88,8 +89,6 @@ def scan_next_float(cursor):
         cursor.advance()
 
     cursor.skip(' \t\n')
-    print(cursor)
-    print(number)
     return float(number), cursor
 
 NUMBER = 'number'
@@ -325,7 +324,6 @@ def scan_namespace_body(cursor, access_data, namespace):
         elif var_type == 'string':
             var_value, cursor = scan_next_string(cursor)
             if cursor.skip_char_ifexpected(';') == False:
-                print(var_value)
                 parsing_error(cursor, emsg(f"code format error",'expected ;'))
         elif var_type == 'list':
             var_value, cursor = scan_next_list(cursor)
@@ -346,7 +344,8 @@ def scan_namespace_body(cursor, access_data, namespace):
 
     return body, cursor
 
-
+def is_include_file_symbol(character):
+    return character == '$'
 
 
 def parse(cursor):
@@ -366,13 +365,41 @@ def parse(cursor):
             cursor.skip_char_ifexpected('}')
 
         elif is_comment_symbol(cursor.get_char()):
+
             cursor = skip_line_comment(cursor)
+            cursor.skip_spaces()
+
+        elif is_include_file_symbol(cursor.get_char()):
+            file_path = ''
+            cursor.skip_char_ifexpected('$')
+            while is_valid_chpath(cursor.get_char()) and cursor.get_char() != '\n':
+                file_path += cursor.get_char()
+                cursor.advance()
+
+            cursor.skip_spaces()
+            included_data = run(file_path)
+            for key, value in included_data.items():
+                result[key] = value
         else:
             if token != 'namespace':
                 parsing_error(cursor, emsg(f"UnKnown type:{token}", "was expecting any of namespace"))
 
         cursor.skip('\n \t')
     return result
+
+def run(filename):
+    script = ''
+    try:
+        with open(filename, 'r') as file:
+            script = file.read()
+    except FileNotFoundError:
+        print(f"The file '{filename}' was not found.")
+        exit(1)
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+    cursor = Cursor(script)
+    return parse(cursor)
 
 '''
 isnumeric()

@@ -1,0 +1,10 @@
+namespace test{
+    int test2 = 100;
+    int test3 = 100;
+    namespace name_test{
+        string name  = "test";
+        list list_int = int [0, 2, 3]
+        struct score = {.total:1000, .season1:1200}
+    }
+
+}

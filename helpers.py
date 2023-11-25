@@ -1,3 +1,4 @@
+
 def generate_frame_list(filename, x):
     frame_list = [f'"frame_{i:03d}.png"' for i in range(x)]
 
@@ -45,3 +46,5 @@ def extract_value(namespace, config):
 
 
     return conf
+
+

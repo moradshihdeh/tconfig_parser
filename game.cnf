@@ -9,7 +9,9 @@ namespace window {
     }
 }
 
+# $player.cnf include data inside the file example $config/player.cnf
 
+$test.cnf
 
 namespace player {
     int x = 0;
