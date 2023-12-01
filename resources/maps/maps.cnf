@@ -1,0 +1,37 @@
+# function sum(10, 20) { return as int arg1 + arg2;}
+# function int sum(1000,2300) return arg1 + arg2;
+# @maps.map1.name returns the name of the map
+# @this.name return the variable name of current object
+# lets say:
+# namespace space {
+#   int var = 10;
+#   int new_var = @this.var;
+#   namespace planet{
+#       int diameter = @this.var is wrong
+#       int diameter = @space.var is right
+#    }
+# }
+
+namespace  maps{
+    namespace map1 {
+        string name = "map1";
+
+        list layer1 = int [1, 2, 3, 4, 5, 6]
+    }
+
+}
+
+# tbi to be implemented
+#  load(filename)
+# example: list int layer1 = load(filename);
+# or example2: list int layer1 = $filename
+namespace scene_example{
+    namespace intro{
+        string name = "intro";
+        namespace map{
+
+        }
+    }
+    namespace level1{
+    }
+}

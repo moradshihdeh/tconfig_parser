@@ -24,6 +24,7 @@ def print_dict(dictionary, indent=0):
 
 def is_valid_chname(character):
     return character.isalpha() or character.isdigit() or character == '_'
+
 def extract_value(namespace, config):
     index = 0
     eof = len(namespace)

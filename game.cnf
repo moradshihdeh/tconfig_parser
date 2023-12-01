@@ -13,10 +13,12 @@ namespace window {
 
 $test.cnf
 
+$./resources/maps/maps.cnf
+
 namespace player {
     int x = 0;
     int y = 0;
-    float test = .2 + -.5 -- 1;
+    float test = .2 +-.5 -- 1;
     int radius = 0;
     struct color = {.r:0, .g:0, .b:255 }
     struct data = { .info:'data', .total:1000}

@@ -1,6 +1,5 @@
 
 from cursor import Cursor
-from strtypes import *
 from mathexpr import *
 from error_helpers import *
 
